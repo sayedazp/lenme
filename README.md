@@ -41,6 +41,5 @@ redis conigurations are in settings.py file in cache section and celery section
  - if the app is running locally visit `127.0.0.1:8000/docs/`
 
 ## Database Schema
- - link will be placed once ready!
-
+ - To provide an intuitive overview over the database I used a tool called dbdiagram.io, you can view the schema interactively via `https://dbdiagram.io/d/Lendme-db-schema-diagram-6580bb3d56d8064ca043dfcc`
 
