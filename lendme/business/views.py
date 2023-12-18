@@ -97,7 +97,7 @@ class OfferAcceptApiView(mixins.UpdateModelMixin,
     serializer_class = patchOfferSerializer
 
     def get_queryset(self):
-        return Offer.objects.all()
+        pass
 
     def patch(self, request, *args, **kwargs):
         self.partial_update(request, *args, **kwargs)
@@ -116,6 +116,10 @@ class ScheduledPaymentRetrieveAPIView(mixins.RetrieveModelMixin,
     permission_classes = [permissions.IsAuthenticated, BorrowerPermission]
     serializer_class = ScheduledPaymentSerializer
 
+
+    def get_queryset(self):
+        pass
+
     def get(self, request, *args, **kwargs):
         return self.retrieve(request, *args, **kwargs)
 
@@ -128,6 +132,10 @@ class payInstallmentApiView(mixins.UpdateModelMixin,
                          generics.GenericAPIView):
     permission_classes = [permissions.IsAuthenticated, BorrowerPermission]
     serializer_class = ScheduledPaymentSerializer
+    
+    def get_queryset(self):
+        pass
+
 
     def patch(self, request, *args, **kwargs):
         self.partial_update(request, *args, **kwargs)
