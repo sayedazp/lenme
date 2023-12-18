@@ -24,6 +24,7 @@ redis conigurations are in settings.py file in cache section and celery section
  3. Activate the virtual environment `source venv/bin/activate` 
  4. Make migration to prepare the database `python manage.py makemigrations`
  5. Migrate those migrations to create the database `python manage.py migrate`
+ 6. Run the server via `python manage.py runserver`
 
 ## Future Improvements
 
@@ -31,5 +32,11 @@ redis conigurations are in settings.py file in cache section and celery section
  - Functions and modules should be better documented.
 
 
+## Docs
+ - for Api and models documentation I user swagger, once application starts visit `serverurl:port/docs/`
+ - if the app is running locally visit `127.0.0.1:8000/docs/`
+
 ## Database Schema
  - link will be placed once ready!
+
+
