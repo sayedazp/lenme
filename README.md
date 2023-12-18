@@ -18,6 +18,8 @@ redis conigurations are in settings.py file in cache section and celery section
  1. Simulate External payment gateway behavior.
  2. celery beat to periodically check for payments status.
  
+
+
 ## How to Start the project
  1. Clone the Repository    `git clone https://github.com/sayedazp/lenme.git`
  2. Start a new virtual environment  `python3 -m venv venv`
@@ -25,6 +27,8 @@ redis conigurations are in settings.py file in cache section and celery section
  4. Make migration to prepare the database `python manage.py makemigrations`
  5. Migrate those migrations to create the database `python manage.py migrate`
  6. Run the server via `python manage.py runserver`
+ 7. Run celery worker via ` celery -A mycelery.celery worker -l info`
+ 8. Run celery beat via `celery -A mycelery.celery beat -l info`  
 
 ## Future Improvements
 
