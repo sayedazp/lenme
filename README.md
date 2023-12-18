@@ -32,4 +32,4 @@ redis conigurations are in settings.py file in cache section and celery section
 
 
 ## Database Schema
-
+ - link will be placed once ready!
