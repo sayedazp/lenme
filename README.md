@@ -29,3 +29,7 @@ redis conigurations are in settings.py file in cache section and celery section
 
  - More tests should be added to enhance the test coverage.
  - Functions and modules should be better documented.
+
+
+## Database Schema
+
