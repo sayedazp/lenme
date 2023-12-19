@@ -37,3 +37,9 @@ class ScheduledPaymentSerializer(serializers.ModelSerializer):
     class Meta:
         model = ScheduledPayment
         fields = "__all__"
+
+class PatchScheduledPaymentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ScheduledPayment
+        read_only_fields = ['status', 'dueDate']
+        fields = ['status', 'dueDate']

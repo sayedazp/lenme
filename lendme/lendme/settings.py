@@ -175,3 +175,13 @@ CACHES = {
         "KEY_PREFIX": "example"
     }
 }
+SWAGGER_SETTINGS = {
+    "SECURITY_DEFINITIONS": {
+        "Bearer {JWT}": {
+            "name": "Authorization",
+            "type": "apiKey",
+            "in": "header",
+        }
+    },
+    "USE_SESSION_AUTH": False,
+}

@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from rest_framework import generics, mixins, permissions
 from .models import LoanRequest, Offer, ScheduledPayment
-from .serializers import LoadnRequestSerializer, OfferSerializer, patchOfferSerializer, ScheduledPaymentSerializer
+from .serializers import LoadnRequestSerializer, OfferSerializer, patchOfferSerializer, ScheduledPaymentSerializer, PatchScheduledPaymentSerializer
 from .permissions import BorrowerPermission, LenderPermission
 from .services import createLoanRequest, createOffer, acceptOffer, getScheduledPayment, preparePayInstallment, checkLenderBalance
 from rest_framework import status
@@ -91,26 +91,6 @@ class OffersListApiView(mixins.ListModelMixin,
         criterion = Q(loanRequest__borrowerAccount__user=self.request.user)
         return Offer.objects.filter(criterion)
 
-class OfferAcceptApiView(mixins.UpdateModelMixin,
-                         generics.GenericAPIView):
-    permission_classes = [permissions.IsAuthenticated, BorrowerPermission]
-    serializer_class = patchOfferSerializer
-
-    def get_queryset(self):
-        pass
-
-    def patch(self, request, *args, **kwargs):
-        self.partial_update(request, *args, **kwargs)
-        cache.delete("loanRequests")
-        return Response({
-            "status":"accepted"
-        })
-    def perform_update(self, serializer):
-        return acceptOffer(self=self, serializer=serializer, request=self.request, id=self.kwargs["pk"])
-    
-    def get_object(self):
-        return get_object_or_404(Offer, id=self.kwargs["pk"])
-
 class ScheduledPaymentRetrieveAPIView(mixins.RetrieveModelMixin,
                       generics.GenericAPIView):
     permission_classes = [permissions.IsAuthenticated, BorrowerPermission]
@@ -128,23 +108,33 @@ class ScheduledPaymentRetrieveAPIView(mixins.RetrieveModelMixin,
         return payment
     
 
+class OfferAcceptApiView(mixins.UpdateModelMixin,
+                         generics.GenericAPIView):
+    permission_classes = [permissions.IsAuthenticated, BorrowerPermission]
+    serializer_class = patchOfferSerializer
+    lookup_field = "id"
+
+    def get_queryset(self):
+        return Offer.objects.filter(id=self.kwargs["id"])
+
+    def patch(self, request, *args, **kwargs):
+        return self.partial_update(request, *args, **kwargs)
+    def perform_update(self, serializer):
+        acceptOffer(self=self, serializer=serializer, request=self.request, id=self.kwargs["id"])
+        cache.delete("loanRequests")
+
+
 class payInstallmentApiView(mixins.UpdateModelMixin,
                          generics.GenericAPIView):
     permission_classes = [permissions.IsAuthenticated, BorrowerPermission]
-    serializer_class = ScheduledPaymentSerializer
-    
-    def get_queryset(self):
-        pass
+    serializer_class = PatchScheduledPaymentSerializer
+    lookup_field = "id"
 
+    def get_queryset(self):
+        return ScheduledPayment.objects.filter(id=self.kwargs["id"])
 
     def patch(self, request, *args, **kwargs):
-        self.partial_update(request, *args, **kwargs)
-        return Response({
-            "status":"payment is being processed"
-        })
+        return self.partial_update(request, *args, **kwargs)
+
     def perform_update(self, serializer):
         return preparePayInstallment(self)
-
-    def get_object(self):
-        return get_object_or_404(ScheduledPayment, id=self.kwargs["pk"])
-
