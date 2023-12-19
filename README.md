@@ -15,7 +15,11 @@ Lendme internally handle all the payments to make sure all payments are delivere
 - Linux users can install redis via `sudo snap install redis`
 - Windows users can download redis from <a href="https://redis.io/download">redis</a>.
 
-redis conigurations are in settings.py file in cache section and celery section
+- test redis after  installation:
+  - open redis command line interface`$ redis-cli`
+  - ping the server `127.0.0.1:6379> ping`
+  - If every thin is okay you should see `PONG` as response!
+##### redis conigurations are in settings.py file in cache section and celery section
 
 #### Celery: to ensure payment delivery and achieve some kind of reliability Lendme needs Celery workers for two reasons:
  1. Simulate External payment gateway behavior.
