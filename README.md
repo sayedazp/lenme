@@ -17,7 +17,6 @@ redis conigurations are in settings.py file in cache section and celery section
 #### Celery: to ensure payment delivery and achieve some kind of reliability Lendme needs Celery workers for two reasons:
  1. Simulate External payment gateway behavior.
  2. celery beat to periodically check for payments status.
- 
 
 
 ## How to Start the project
@@ -35,11 +34,12 @@ redis conigurations are in settings.py file in cache section and celery section
 
  - More tests should be added to enhance the test coverage.
  - Functions and modules should be better documented.
+ - Make Atomic Transaction blocks thread safe
 
 ## Docs
  - for Api and models documentation I user swagger, once application starts visit `serverurl:port/docs/`
  - if the app is running locally visit `127.0.0.1:8000/docs/`
- - Please note that swagger tends to prefer symmetric APIS which respond with same requested field, Tried my best to override that behaviour which may in some places make code less intuitive, I created a dedicated module only for swagger UI to represent the actual api requests and responses swaggerSerializers.py
+ - Please note that swagger tends to prefer symmetric APIS which respond with same requested fields, I tried my best to override that behaviour which may in some places make code less intuitive, I created a dedicated modules only for swagger UI to represent the actual api requests and responses swaggerSerializers.py, swagModel.py
 
 ## Database Schema
  - To provide an intuitive overview over the database I used a tool called dbdiagram.io, you can view the schema interactively via `https://dbdiagram.io/d/Lendme-db-schema-diagram-6580bb3d56d8064ca043dfcc`
