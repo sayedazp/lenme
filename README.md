@@ -35,6 +35,7 @@ redis conigurations are in settings.py file in cache section and celery section
  - More tests should be added to enhance the test coverage.
  - Functions and modules should be better documented.
  - Make Atomic Transaction blocks thread safe
+ - Refactor the code base to follow (pycodestyle formely pep8) conventions
 
 ## Docs
  - for Api and models documentation I user swagger, once application starts visit `serverurl:port/docs/`
