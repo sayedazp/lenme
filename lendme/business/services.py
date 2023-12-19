@@ -1,17 +1,12 @@
 from .models import LoanRequest, Account, Offer, ScheduledPayment
 from django.shortcuts import get_object_or_404
 from rest_framework import exceptions
-from django.db.models import Q
 from django.db import transaction
 from dateutil.relativedelta import relativedelta
 from django.utils import timezone
-from django.core.cache import cache
-from decimal import Decimal
 import heapq
 from payment.services import fundPayment, installmentPayment
 from django.db.utils import IntegrityError
-
-
 
 
 def createLoanRequest(request, data):
@@ -152,4 +147,3 @@ def payInstallment(lenderAccount:Account, borrowerAccount:Account, installment:S
     borrowerAccount.lockedBalance += installmentAmount
     borrowerAccount.save(update_fields=["balance", "lockedBalance"])
     installmentPayment(installmentAmount, lenderAccount, borrowerAccount, installment)
-
