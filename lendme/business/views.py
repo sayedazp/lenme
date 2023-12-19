@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from rest_framework import generics, mixins, permissions
 from .models import LoanRequest, Offer, ScheduledPayment
-from .serializers import LoadnRequestSerializer, OfferSerializer, patchOfferSerializer, ScheduledPaymentSerializer, PatchScheduledPaymentSerializer
+from .serializers import LoanRequestSerializer, OfferSerializer, patchOfferSerializer, ScheduledPaymentSerializer, PatchScheduledPaymentSerializer
 from .permissions import BorrowerPermission, LenderPermission
 from .services import createLoanRequest, createOffer, acceptOffer, getScheduledPayment, preparePayInstallment, checkLenderBalance
 from rest_framework import status
@@ -10,10 +10,12 @@ from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
 from django.db.models import Q
 from django.core.cache import cache
+from drf_yasg.utils import swagger_auto_schema
+from . import swaggerSerializers
 
 class LoanRequestListApiView(mixins.ListModelMixin,
                   generics.GenericAPIView):
-    serializer_class = LoadnRequestSerializer
+    serializer_class = LoanRequestSerializer
     permission_classes = [permissions.IsAuthenticated, LenderPermission]
 
     def get(self, request, *args, **kwargs):
@@ -33,8 +35,15 @@ class LoanRequestListApiView(mixins.ListModelMixin,
 class SubmitLoanRequest(mixins.CreateModelMixin,
                         generics.GenericAPIView):
     permission_classes = [permissions.IsAuthenticated, BorrowerPermission]
-    serializer_class = LoadnRequestSerializer
+    serializer_class = LoanRequestSerializer
 
+    @swagger_auto_schema(
+            request_body=swaggerSerializers.LoadnRequestSerializerswag,
+            operation_description="submitting a new loan request",
+            responses={
+                201:LoanRequestSerializer
+            }
+        )
     def post(self, request, *args, **kwargs):
         return self.create(request, *args, **kwargs)
 
@@ -51,6 +60,13 @@ class SubmitOffer(mixins.CreateModelMixin,
     permission_classes = [permissions.IsAuthenticated, LenderPermission]
     serializer_class = OfferSerializer
 
+    @swagger_auto_schema(
+            request_body=swaggerSerializers.LoadnRequestSerializerswag,
+            operation_description="submitting a new offer for loan request where loan id is id!",
+            responses={
+                201:swaggerSerializers.OfferSerializerSwag
+            }
+        )
     def post(self, request, *args, **kwargs):
         return self.create(request, *args, **kwargs)
 
@@ -68,7 +84,9 @@ class SubmitOffer(mixins.CreateModelMixin,
 class checkCanFundApiView(APIView):
     permission_classes = [permissions.IsAuthenticated, LenderPermission]
     serializer_class = OfferSerializer
-
+    @swagger_auto_schema(
+            operation_description="submitting a new loan request",
+        )
     def get(self, request, *args, **kwargs):
         loan = self.get_object(request, *args, **kwargs)
         checkLenderBalance(request.user.account, loan)

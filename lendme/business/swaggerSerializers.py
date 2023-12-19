@@ -1,3 +1,4 @@
+"""A custom module for swagger documentation purposes only"""
 from rest_framework import serializers
 from .models import LoanRequest, Account, Offer, ScheduledPayment
 
@@ -11,21 +12,16 @@ class AccountSerializer(serializers.ModelSerializer):
     def get_username(self, instance):
         return instance.username
 
-class LoanRequestSerializer(serializers.ModelSerializer):
-    borrowerAccount = AccountSerializer(read_only = True)
+class LoadnRequestSerializerswag(serializers.ModelSerializer):
     class Meta:
         model = LoanRequest
         read_only_fields = ['businessFee', 'status', 'created_at']
-        fields = "__all__"
+        exclude=["borrowerAccount"]
 
-class OfferSerializer(serializers.ModelSerializer):
-    lenderAccount = AccountSerializer(read_only = True)
-    loanRequest = LoanRequestSerializer(read_only = True)
-
+class OfferSerializerSwag(serializers.ModelSerializer):
     class Meta:
         model = Offer
-        read_only_fields = ['created_at', 'status']
-        fields = ['id', 'interestRate', 'status', 'lenderAccount', 'loanRequest']
+        fields = ['status']
 
 class patchOfferSerializer(serializers.ModelSerializer):
     class Meta:
