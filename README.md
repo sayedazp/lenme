@@ -24,11 +24,12 @@ redis conigurations are in settings.py file in cache section and celery section
  1. Clone the Repository    `git clone https://github.com/sayedazp/lenme.git`
  2. Start a new virtual environment  `python3 -m venv venv`
  3. Activate the virtual environment `source venv/bin/activate` 
- 4. Make migration to prepare the database `python manage.py makemigrations`
- 5. Migrate those migrations to create the database `python manage.py migrate`
- 6. Run the server via `python manage.py runserver`
- 7. Run celery worker via ` celery -A mycelery.celery worker -l info`
- 8. Run celery beat via `celery -A mycelery.celery beat -l info`  
+ 4. install the project requirements `pip install -r requirements.txt`
+ 5. Make migration to prepare the database `python manage.py makemigrations`
+ 6. Migrate those migrations to create the database `python manage.py migrate`
+ 7. Run the server via `python manage.py runserver`
+ 8. Run celery worker via ` celery -A mycelery.celery worker -l info`
+ 9. Run celery beat via `celery -A mycelery.celery beat -l info`  
 
 ## Future Improvements
 
