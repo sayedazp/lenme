@@ -12,6 +12,9 @@ Lendme internally handle all the payments to make sure all payments are delivere
 
 #### Redis: Lendme uses redis as a caching provider and as a message broker to interact with celery
 #### make sure redis is installed on the system!
+- Linux users can install redis via `sudo snap install redis`
+- Windows users can download redis from <a href="https://redis.io/download">redis</a>.
+
 redis conigurations are in settings.py file in cache section and celery section
 
 #### Celery: to ensure payment delivery and achieve some kind of reliability Lendme needs Celery workers for two reasons:
