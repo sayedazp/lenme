@@ -36,7 +36,6 @@ redis conigurations are in settings.py file in cache section and celery section
  - More tests should be added to enhance the test coverage.
  - Functions and modules should be better documented.
 
-
 ## Docs
  - for Api and models documentation I user swagger, once application starts visit `serverurl:port/docs/`
  - if the app is running locally visit `127.0.0.1:8000/docs/`
@@ -44,4 +43,3 @@ redis conigurations are in settings.py file in cache section and celery section
 
 ## Database Schema
  - To provide an intuitive overview over the database I used a tool called dbdiagram.io, you can view the schema interactively via `https://dbdiagram.io/d/Lendme-db-schema-diagram-6580bb3d56d8064ca043dfcc`
-
